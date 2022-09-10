@@ -21,11 +21,10 @@
                 </div>
                 <div class="float-right">
                     <div class="btn-group" role="group">
-                        <a href="{{ url('category/add') }}" class="btn btn-primary pull-right"><i class="fa fa-plus"
-                                aria-hidden="true"></i> Tambah Kategori</a>
+                        <a href="javascript:void(0)" class="btn btn-primary btn-create pull-right">
+                            <i class="fa fa-plus" aria-hidden="true"></i> Tambah Kategori</a>
                     </div>
                 </div>
-
             </div>
         </section>
 
@@ -59,12 +58,64 @@
             </div>
         </section>
     </div>
+
+    <!-- Modal tambah kategori -->
+    <div class="modal fade" id="modalCategory" tabindex="-1" role="dialog" aria-labelledby="modalSentimenTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title float-left" id="exampleModalLongTitle">Tambah Kategori</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ url('category/store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-control-label text-left modal-style-label">Nama Kategori</label>
+                                    <br>
+                                    <input type="text" class="form-control mt-10" name="category_name"
+                                        placeholder="Nama Situs" required>
+                                    <br>
+                                    <label class="form-control-label text-left modal-style-label">Platform Situs</label>
+                                    <br>
+                                    <select class="form-control" name="site_id" required>
+                                        <option value="">Pilih Situs</option>
+                                        @foreach ($site as $val)
+                                            <option value="{{ $val->id }}">{{ $val->site_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="text-left">
+                            <button type="button" class="btn btn-secondary float-left" data-dismiss="modal"><i
+                                    class="fa fa-times" aria-hidden="true"></i> Close</button>
+                            <button type="submit" class="btn btn-primary float-right"><i class="fa fa-check"></i>
+                                Simpan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end Modal tambah kategori -->
 @endsection
 
 @section('script')
     <script>
         $(document).ready(function() {
             $('#example').DataTable();
+
+            $('.btn-create').click(function() {
+                $('#modalCategory').modal('toggle');
+            });
         });
     </script>
 @endsection

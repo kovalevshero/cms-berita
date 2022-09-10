@@ -36,6 +36,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Category Routes
     Route::get('category', [CategoryController::class, 'index']);
+    Route::post('category/store', [CategoryController::class, 'store']);
 
     // Subscriber Routes
     Route::get('subscriber', [SubscriberController::class, 'index']);
